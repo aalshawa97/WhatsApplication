@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mVerify;
     private Button mSend;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = null;
-    String mVerificationId = " ";
+    String mVerificationId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verifyPhoneNumberWithCode(){
-        /*PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
-        signInWithPhoneCredential(credential);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+        /*signInWithPhoneCredential(credential);
          */
     }
 
