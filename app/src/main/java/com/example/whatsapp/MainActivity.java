@@ -3,6 +3,7 @@ package com.example.whatsapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -23,19 +25,25 @@ public class MainActivity extends AppCompatActivity {
     private Button mVerify;
     private Button mSend;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = null;
+    String mVerificationId = " ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
-
+        userIsLoggedIn();
         mPhoneNumber = findViewById(R.id.phoneNumber);
         mCode = findViewById(R.id.code);
         mSend = findViewById(R.id.send);
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startPhoneNumberVerification();
+                if(mVerificationId != null){
+                    verifyPhoneNumberWithCode();
+                }
+                else{
+                    startPhoneNumberVerification();
+                }
             }
         });
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -48,7 +56,20 @@ public class MainActivity extends AppCompatActivity {
             public void onVerificationFailed(@NonNull FirebaseException e) {
 
             }
+
+            @Override
+            public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(verificationId, forceResendingToken);
+                mVerificationId = verificationId;
+                mSend.setText(R.string.verifyCode);
+            }
         };
+    }
+
+    private void verifyPhoneNumberWithCode(){
+        /*PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+        signInWithPhoneCredential(credential);
+         */
     }
 
     private void signInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
@@ -64,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void userIsLoggedIn() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            startActivity(new Intent(getApplicationContext(), MainPageActivity.class));
+            finish();
+            return;
+        }
     }
 
     private void startPhoneNumberVerification() {
