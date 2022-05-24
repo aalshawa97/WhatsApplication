@@ -22,7 +22,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/send_verificaiton_code"
-        android:id="@+id/verify"/>
+        android:text="@string/send_verification_code"
+        android:id="@+id/send"/>
 
 </LinearLayout>

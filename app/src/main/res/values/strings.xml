@@ -2,5 +2,5 @@
     <string name="app_name">WhatsApp</string>
     <string name="enter_phone_number">Enter phone number</string>
     <string name="enter_code">Enter code</string>
-    <string name="send_verificaiton_code">Send verificaiton code</string>
+    <string name="send_verification_code">Send verification code</string>
 </resources>
