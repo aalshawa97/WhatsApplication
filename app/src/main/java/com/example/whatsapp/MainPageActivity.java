@@ -17,6 +17,18 @@ public class MainPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
 
         Button mLogout =  findViewById(R.id.logout);
+        Button mFindUser = findViewById(R.id.findUser);
+        mFindUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), FindUserActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

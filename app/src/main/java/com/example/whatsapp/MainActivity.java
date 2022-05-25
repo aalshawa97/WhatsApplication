@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,17 +36,23 @@ public class MainActivity extends AppCompatActivity {
         mPhoneNumber = findViewById(R.id.phoneNumber);
         mCode = findViewById(R.id.code);
         mSend = findViewById(R.id.send);
-        mSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mVerificationId != null){
-                    verifyPhoneNumberWithCode();
+        try{
+            mSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mVerificationId != null){
+                        verifyPhoneNumberWithCode();
+                    }
+                    else{
+                        startPhoneNumberVerification();
+                    }
                 }
-                else{
-                    startPhoneNumberVerification();
-                }
-            }
-        });
+            });
+        }
+        catch (Exception e){
+            Log.d("Verification send", "onCreate: verify");
+        }
+
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
@@ -67,7 +74,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verifyPhoneNumberWithCode(){
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+        try{
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mCode.getText().toString());
+        }
+        catch (Exception e)
+        {
+            Log.d("Verify phone number", "verifyPhoneNumberWithCode: Illegal argument " + e.toString());
+        }
         /*signInWithPhoneCredential(credential);
          */
     }

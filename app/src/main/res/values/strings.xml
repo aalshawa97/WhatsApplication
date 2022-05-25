@@ -5,4 +5,8 @@
     <string name="send_verification_code">Send verification code</string>
     <string name="logout">logout</string>
     <string name="verifyCode">Verify Code</string>
+    <string name="display_contacts">Display contacts</string>
+    <string name="mFindUser">Find user</string>
+    <string name="contact">contact</string>
+    <string name="phone">Phone</string>
 </resources>
