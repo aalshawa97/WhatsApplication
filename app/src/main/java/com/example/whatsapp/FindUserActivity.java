@@ -30,7 +30,7 @@ public class FindUserActivity extends AppCompatActivity {
         mUserList.setHasFixedSize(false);
         mUserListLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         mUserList.setLayoutManager(mUserListLayoutManager);
-        //mUserListAdapter = new UserListAdapter(userList);
+        //mUserListAdapter = new RecyclerView.Adapter(userList);
         mUserList.setAdapter(mUserListAdapter);
     }
 }

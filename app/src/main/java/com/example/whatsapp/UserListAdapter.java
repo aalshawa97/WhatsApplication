@@ -13,13 +13,23 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class UserListAdapter extends RecyclerView {
-    ArrayList<UserObject> userList;
+    public ArrayList<UserObject> userList;
+    public View mUserList;
     private Object TextView;
     private TextView mName;
     private TextView mPhone;
 
-    public UserListAdapter(@NonNull Context context, ArrayList<UserObject> userList) {
+    public UserListAdapter(Context context) {
         super(context);
+        //super(context);
+        this.mUserList = findViewById(R.id.userList);
+        //this.userList = userList;
+
+    }
+
+    public UserListAdapter(ArrayList<UserObject> userList) {
+        super(null);
+        //super(context);
         this.userList = userList;
     }
 
