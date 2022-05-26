@@ -1,5 +1,6 @@
 package com.example.whatsapp;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -26,12 +27,16 @@ public class FindUserActivity extends AppCompatActivity {
         initializeRecyclerView();
     }
 
+    @SuppressLint("Range")
     private void getContactList(){
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         while(phones.moveToNext()){
-            //String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            //String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
+            String name = " ", phone = " ";
+            name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            UserObject mContact = new UserObject(name, phone);
+            userList.add(mContact);
+            mUserListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -41,7 +46,7 @@ public class FindUserActivity extends AppCompatActivity {
         mUserList.setHasFixedSize(false);
         mUserListLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         mUserList.setLayoutManager(mUserListLayoutManager);
-        //mUserListAdapter = new RecyclerView.Adapter(userList);
+        mUserListAdapter = new UserListAdapter(userList);
         mUserList.setAdapter(mUserListAdapter);
     }
 }

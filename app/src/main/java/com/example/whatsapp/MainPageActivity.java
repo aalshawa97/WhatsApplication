@@ -48,11 +48,13 @@ public class MainPageActivity extends AppCompatActivity {
 
     private void getPermissions() {
         requestPermission(new String[]{Manifest.permission.WRITE_CONTACTS});
+        requestPermission(new String[]{Manifest.permission.READ_CONTACTS});
     }
 
     private void requestPermission(String[] strings) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             requestPermissions(new String[] {Manifest.permission.WRITE_CONTACTS}, 1);
+            requestPermissions(new String[] {Manifest.permission.READ_CONTACTS}, 1);
         }
     }
 }

@@ -12,23 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 
-public class UserListAdapter extends RecyclerView {
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
     public ArrayList<UserObject> userList;
     public View mUserList;
     private Object TextView;
     private TextView mName;
     private TextView mPhone;
 
-    public UserListAdapter(Context context) {
-        super(context);
-        //super(context);
-        this.mUserList = findViewById(R.id.userList);
-        //this.userList = userList;
-
-    }
-
-    public UserListAdapter(ArrayList<UserObject> userList) {
-        super(null);
+    public UserListAdapter(ArrayList<UserObject>  userList) {
         //super(context);
         this.userList = userList;
     }
@@ -55,6 +46,11 @@ public class UserListAdapter extends RecyclerView {
 
         UserListViewHolder rcv = new UserListViewHolder(layoutView);
         return rcv;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull UserListViewHolder holder, int position) {
+
     }
 
     /*
