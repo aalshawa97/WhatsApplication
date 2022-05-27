@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +43,18 @@ public class FindUserActivity extends AppCompatActivity {
             contactList.add(mContact);
             mUserListAdapter.notifyDataSetChanged();
         }
+    }
+
+    private String getCountryISO(){
+        String iso = null;
+        TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(getApplicationContext().TELEPHONY_SERVICE);
+        if(telephonyManager.getNetworkCountryIso()!=null)
+        {
+            if(!telephonyManager.getNetworkCountryIso().toString().equals("")){
+                iso = telephonyManager.getNetworkCountryIso().toString();
+            }
+        }
+        return iso;
     }
 
     private void initializeRecyclerView() {
