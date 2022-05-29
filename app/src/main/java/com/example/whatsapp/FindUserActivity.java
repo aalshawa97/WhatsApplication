@@ -7,10 +7,17 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.telephony.TelephonyManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class FindUserActivity extends AppCompatActivity {
@@ -53,7 +60,40 @@ public class FindUserActivity extends AppCompatActivity {
             UserObject mContact = new UserObject(name, phone);
             contactList.add(mContact);
             mUserListAdapter.notifyDataSetChanged();
+            getUserDetails(mContact);
         }
+    }
+
+    private void getUserDetails(UserObject mContact){
+        DatabaseReference mUserDB = FirebaseDatabase.getInstance().getReference().child("user");
+        Query query = mUserDB.orderByChild("phone").equalTo(mContact.getPhone());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String phone = "", name = "";
+
+                    for(DataSnapshot childSnapshot : snapshot.getChildren()){
+                        if(childSnapshot.child("phone").getValue()!=null){
+                            phone = childSnapshot.child("phone").getValue().toString();
+                        }
+                        if(childSnapshot.child("name").getValue()!=null){
+                            name = childSnapshot.child("name").getValue().toString();
+                        }
+
+                        UserObject mUser = new UserObject(name, phone);
+                        userList.add(mUser);
+
+                        mUserListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private String getCountryISO(){

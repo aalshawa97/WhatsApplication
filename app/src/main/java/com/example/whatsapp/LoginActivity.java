@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                signInWithPhoneCredential(phoneAuthCredential);
+                signInWithPhoneAuthCredential(phoneAuthCredential);
             }
 
             @Override
@@ -94,18 +94,6 @@ public class LoginActivity extends AppCompatActivity {
          */
     }
 
-    private void signInWithPhoneCredential(PhoneAuthCredential phoneAuthCredential) {
-        FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-             if(task.isSuccessful())
-             {
-                 userIsLoggedIn();
-             }
-            }
-        });
-    }
-
     private void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential){
         FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential).addOnCompleteListener(this, (task -> {
             if(task.isSuccessful()){
@@ -122,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                 userMap.put("name", user.getDisplayName());
                                 mUserDB.updateChildren(userMap);
                             }
+                            userIsLoggedIn();
                         }
 
                         @Override
