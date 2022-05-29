@@ -34,11 +34,22 @@ public class FindUserActivity extends AppCompatActivity {
 
     @SuppressLint("Range")
     private void getContactList(){
+        String ISOPreFix = getCountryISO();
         Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         while(phones.moveToNext()){
             String name = " ", phone = " ";
             name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+            phone = phone.replace(" ", "");
+            phone = phone.replace("-", "");
+            phone = phone.replace("(", "");
+            phone = phone.replace(")", "");
+
+            if(!String.valueOf(phone.charAt(0)).equals("+")){
+                phone = ISOPreFix + phone;
+            }
+
             UserObject mContact = new UserObject(name, phone);
             contactList.add(mContact);
             mUserListAdapter.notifyDataSetChanged();
