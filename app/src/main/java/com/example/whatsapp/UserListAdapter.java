@@ -4,10 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public class UserListViewHolder extends RecyclerView.ViewHolder{
         public UserListViewHolder view;
         public TextView mName, mPhone;
+        public LinearLayout mLayout;
+
         public UserListViewHolder(@NonNull View itemView) {
             super(itemView);
             mName = view.findViewById(R.id.name);
@@ -50,19 +56,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder holder, int position) {
-
-    }
-
-    /*
-    public UserListAdapter(@NonNull View itemView) {
-        super(itemView);
-    }
-    */
-
-
-    public void onBindViewHolder(@NonNull UserListAdapter holder, int position) {
         holder.mName.setText(userList.get(position).getName());
         holder.mPhone.setText(userList.get(position).getPhone());
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();
+                FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(true);
+                FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(true);
+            }
+        });
+    }
+
+
+    public UserListAdapter(@NonNull View itemView) {
+        //super(itemView);
     }
 
     public int getItemCount() {
