@@ -1,5 +1,6 @@
 package com.example.whatsapp.User;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
         public UserListViewHolder(@NonNull View itemView) {
             super(itemView);
-            mName = view.findViewById(R.id.name);
-            mPhone = view.findViewById(R.id.phone);
+            mName = itemView.findViewById(R.id.name);
+            mPhone = itemView.findViewById(R.id.phone);
+            mLayout = itemView.findViewById(R.id.layout);
         }
 
         public TextView findViewById(int name) {
@@ -53,16 +55,15 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         return rcv;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull UserListViewHolder holder, int position) {
-        holder.mName.setText(userList.get(position).getName());
-        holder.mPhone.setText(userList.get(position).getPhone());
+    public void onBindViewHolder(@NonNull final UserListViewHolder holder, int position) {
+        holder.mName.setText(userList.get(holder.getAdapterPosition()).getName());
+        holder.mPhone.setText(userList.get(holder.getAdapterPosition()).getPhone());
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();
                 FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(true);
-                FirebaseDatabase.getInstance().getReference().child("user").child(FirebaseAuth.getInstance().getUid()).setValue(true);
+                FirebaseDatabase.getInstance().getReference().child("user").child(userList.get(holder.getAdapterPosition()).getUid()).child(key).setValue(true);
             }
         });
     }
