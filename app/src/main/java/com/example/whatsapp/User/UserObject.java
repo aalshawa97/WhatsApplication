@@ -1,4 +1,4 @@
-package com.example.whatsapp;
+package com.example.whatsapp.User;
 
 public class UserObject {
     private String uid, name,phone;

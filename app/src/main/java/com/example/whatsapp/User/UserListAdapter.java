@@ -1,6 +1,5 @@
-package com.example.whatsapp;
+package com.example.whatsapp.User;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.whatsapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
@@ -39,7 +38,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             mPhone = view.findViewById(R.id.phone);
         }
 
-        private TextView findViewById(int name) {
+        public TextView findViewById(int name) {
             return (android.widget.TextView) TextView;
         }
     }

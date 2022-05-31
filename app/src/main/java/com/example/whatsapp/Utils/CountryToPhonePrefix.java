@@ -1,4 +1,4 @@
-package com.example.whatsapp;
+package com.example.whatsapp.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
