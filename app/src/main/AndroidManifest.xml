@@ -18,7 +18,7 @@
         android:theme="@style/Theme.WhatsApp"
         tools:targetApi="31">
         <activity
-            android:name=".ChatActivity"
+            android:name=".Utils.ChatActivity"
             android:exported="false" />
         <activity android:name=".FindUserActivity" />
         <activity

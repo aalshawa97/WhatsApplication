@@ -25,7 +25,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initializeRecyclerView() {
-        mChatList = findViewById(R.id.userList);
+        userList = new ArrayList<>();
+        mChatList = findViewById(R.id.recyclerView);
         mChatList.setNestedScrollingEnabled(false);
         mChatList.setHasFixedSize(false);
         mUserListLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
