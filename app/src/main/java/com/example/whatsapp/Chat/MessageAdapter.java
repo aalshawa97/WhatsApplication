@@ -14,13 +14,13 @@ import com.example.whatsapp.R;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
-    public ArrayList<ChatObject> messageList;
+    public ArrayList<MessageObject> messageList;
     public View mChatList;
     private Object TextView;
     private android.widget.TextView mName;
     private TextView mPhone;
 
-    public MessageAdapter(ArrayList<ChatObject>  messageList) {
+    public MessageAdapter(ArrayList<MessageObject>  messageList) {
         //super(context);
         this.messageList = messageList;
     }
@@ -28,7 +28,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, null, false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, null, false);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutView.setLayoutParams(lp);
 
@@ -37,7 +37,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public void onBindViewHolder(@NonNull MessageAdapter.MessageViewHolder holder, int position) {
-        holder.mTitle.setText(messageList.get(position).getChatId());
+        //holder.mTitle.setText(messageList.get(position).getChatId());
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,14 +55,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return messageList.size();
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTitle;
+    class MessageViewHolder extends RecyclerView.ViewHolder{
+        public TextView mMessage, mSender;
         public LinearLayout mLayout;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             //mTitle = itemView.findViewById(R.id.title);
             mLayout = itemView.findViewById(R.id.layout);
+            mMessage = itemView.findViewById(R.id.message);
+            mSender = itemView.findViewById(R.id.sender);
+
         }
 
     }

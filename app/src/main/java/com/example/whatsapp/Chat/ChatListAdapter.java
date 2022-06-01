@@ -1,5 +1,7 @@
 package com.example.whatsapp.Chat;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsapp.R;
+import com.example.whatsapp.Utils.ChatActivity;
 
 import java.util.ArrayList;
 
@@ -36,12 +39,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         return rcv;
     }
 
-    public void onBindViewHolder(@NonNull ChatListAdapter.ChatListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ChatListAdapter.ChatListViewHolder holder, int position) {
         holder.mTitle.setText(chatList.get(position).getChatId());
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent (view.getContext(), ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("chatID", chatList.get(holder.getAdapterPosition()).getChatId());
+                intent.putExtras(bundle);
+                view.getContext().startActivity(intent);
             }
         });
     }
