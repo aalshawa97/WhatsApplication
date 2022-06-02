@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -42,6 +44,16 @@ public class ChatActivity extends AppCompatActivity {
         chatID = getIntent().getExtras().getString("chatID");
         mChatDb = FirebaseDatabase.getInstance().getReference().child("chat").child(chatID);
         Button mSend = findViewById(R.id.send);
+        Button mAddMedia = findViewById(R.id.addMedia);
+        mSend.setOnClickListener((v)-> {sendMessage();});
+        //mSend.setOnClickListener((v)-> {sendMessage();});
+        /*mSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage();
+            }
+        });*/
+        mAddMedia.setOnClickListener((view -> {openGallery();}));
         initializeRecyclerView();
         getChatMessages();
     }
@@ -114,5 +126,33 @@ public class ChatActivity extends AppCompatActivity {
         mChatList.setLayoutManager(mUserListLayoutManager);
         mChatListAdapter = new MessageAdapter(userList);
         mChatList.setAdapter(mChatListAdapter);
+    }
+
+    int PICK_IMAGE_INTENT = 1;
+    ArrayList<String> mediaUriList = new ArrayList<>();
+    private void openGallery() {
+        int PICK_IMAGE_INTENT = 1;
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Pictures (s)"), PICK_IMAGE_INTENT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == PICK_IMAGE_INTENT){
+                if(data.getClipData() == null){
+                    mediaUriList.add(data.getData().toString());
+                }
+                else{
+                    for(int i = 0; i < data.getClipData().getItemCount(); i++){
+                        mediaUriList.add(data.getClipData().getItemAt(i).getUri().toString());
+                    }
+                }
+            }
+        }
     }
 }
