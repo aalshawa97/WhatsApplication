@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.example.whatsapp.Chat.ChatListAdapter;
 import com.example.whatsapp.Chat.ChatObject;
+import com.example.whatsapp.Chat.MediaAdapter;
 import com.example.whatsapp.Chat.MessageAdapter;
 import com.example.whatsapp.Chat.MessageObject;
 import com.example.whatsapp.R;
@@ -139,8 +140,8 @@ public class ChatActivity extends AppCompatActivity {
         mMedia.setHasFixedSize(false);
         mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         mMedia.setLayoutManager(mUserListLayoutManager);
-        mMediaAdapter = new MessageAdapter(userList);
-        mMedia.setAdapter(mChatListAdapter);
+        mMediaAdapter = new MediaAdapter(getApplicationContext(),mediaUriList);
+        mMedia.setAdapter(mMediaAdapter);
     }
 
     private void openGallery() {
