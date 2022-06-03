@@ -33,7 +33,7 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity {
     private RecyclerView mChatList, mMedia;
     private RecyclerView.Adapter mChatListAdapter, mMediaAdapter;
-    ArrayList<MessageObject> userList;
+    ArrayList<MessageObject> userList, messageList;
     private RecyclerView.LayoutManager mUserListLayoutManager, mMediaLayoutManager;
     String chatID;
     DatabaseReference mChatDb;
@@ -134,12 +134,12 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<String> mediaUriList = new ArrayList<>();
 
     private void initializeMedia() {
-        userList = new ArrayList<>();
-        mMedia = findViewById(R.id.recyclerView);
+        messageList = new ArrayList<>();
+        mMedia = findViewById(R.id.messageList);
         mMedia.setNestedScrollingEnabled(false);
         mMedia.setHasFixedSize(false);
         mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        mMedia.setLayoutManager(mUserListLayoutManager);
+        mMedia.setLayoutManager(mMediaLayoutManager);
         mMediaAdapter = new MediaAdapter(getApplicationContext(),mediaUriList);
         mMedia.setAdapter(mMediaAdapter);
     }

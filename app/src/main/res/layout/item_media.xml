@@ -9,4 +9,11 @@
         android:id="@+id/media"
         android:src="@mipmap/ic_launcher"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        />
 </LinearLayout>
