@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,6 +117,13 @@ public class ChatActivity extends AppCompatActivity {
 
             newMessageDb.updateChildren(newMessageMap);
         }
+
+        if(!mediaUriList.isEmpty()){
+            for(String mediaUri : mediaUriList){
+                //String mediaId = newMessageDb.child("media").push().getKey;
+                //final FirebaseStorage
+            }
+        }
         mMessage.setText(null);
     }
 
@@ -135,7 +143,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initializeMedia() {
         messageList = new ArrayList<>();
-        mMedia = findViewById(R.id.messageList);
+        mMedia = findViewById(R.id.mediaList);
         mMedia.setNestedScrollingEnabled(false);
         mMedia.setHasFixedSize(false);
         mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -166,6 +174,8 @@ public class ChatActivity extends AppCompatActivity {
                         mediaUriList.add(data.getClipData().getItemAt(i).getUri().toString());
                     }
                 }
+
+                mMediaAdapter.notifyDataSetChanged();
             }
         }
     }
