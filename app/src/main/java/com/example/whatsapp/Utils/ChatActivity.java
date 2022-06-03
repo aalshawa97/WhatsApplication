@@ -30,10 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-    private RecyclerView mChatList;
-    private RecyclerView.Adapter mChatListAdapter;
+    private RecyclerView mChatList, mMedia;
+    private RecyclerView.Adapter mChatListAdapter, mMediaAdapter;
     ArrayList<MessageObject> userList;
-    private RecyclerView.LayoutManager mUserListLayoutManager;
+    private RecyclerView.LayoutManager mUserListLayoutManager, mMediaLayoutManager;
     String chatID;
     DatabaseReference mChatDb;
 
@@ -54,7 +54,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });*/
         mAddMedia.setOnClickListener((view -> {openGallery();}));
-        initializeRecyclerView();
+        initializeMessage();
+        initializeMedia();
         getChatMessages();
     }
 
@@ -117,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessage.setText(null);
     }
 
-    private void initializeRecyclerView() {
+    private void initializeMessage() {
         userList = new ArrayList<>();
         mChatList = findViewById(R.id.recyclerView);
         mChatList.setNestedScrollingEnabled(false);
@@ -130,6 +131,18 @@ public class ChatActivity extends AppCompatActivity {
 
     int PICK_IMAGE_INTENT = 1;
     ArrayList<String> mediaUriList = new ArrayList<>();
+
+    private void initializeMedia() {
+        userList = new ArrayList<>();
+        mMedia = findViewById(R.id.recyclerView);
+        mMedia.setNestedScrollingEnabled(false);
+        mMedia.setHasFixedSize(false);
+        mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        mMedia.setLayoutManager(mUserListLayoutManager);
+        mMediaAdapter = new MessageAdapter(userList);
+        mMedia.setAdapter(mChatListAdapter);
+    }
+
     private void openGallery() {
         int PICK_IMAGE_INTENT = 1;
         Intent intent = new Intent();
