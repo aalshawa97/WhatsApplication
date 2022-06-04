@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 //import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -122,16 +123,11 @@ public class ChatActivity extends AppCompatActivity {
             if(!mediaUriList.isEmpty()){
                 for(String mediaUri : mediaUriList){
                     String mediaId = newMessageDb.child("media").push().getKey();
+                    final StorageReference filePath = FirebaseStorage.getInstance().getReference().child("chat").child(chatID).child(mediaId);
                 }
             }
         }
 
-        if(!mediaUriList.isEmpty()){
-            for(String mediaUri : mediaUriList){
-                //String mediaId = newMessageDb.child("media").push().getKey;
-                //final FirebaseStorage filePath = FirebaseStorage.getInstance().getReference();
-            }
-        }
         mMessage.setText(null);
     }
 
