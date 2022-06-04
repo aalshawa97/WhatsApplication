@@ -116,6 +116,12 @@ public class ChatActivity extends AppCompatActivity {
             newMessageMap.put("creator", FirebaseAuth.getInstance().getUid());
 
             newMessageDb.updateChildren(newMessageMap);
+
+            if(!mediaUriList.isEmpty()){
+                for(String mediaUri : mediaUriList){
+                    String mediaId = newMessageDb.child("media").push().getKey();
+                }
+            }
         }
 
         if(!mediaUriList.isEmpty()){
@@ -129,7 +135,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initializeMessage() {
         userList = new ArrayList<>();
-        mChatList = findViewById(R.id.recyclerView);
+        mChatList = findViewById(R.id.messageList);
         mChatList.setNestedScrollingEnabled(false);
         mChatList.setHasFixedSize(false);
         mUserListLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -146,7 +152,7 @@ public class ChatActivity extends AppCompatActivity {
         mMedia = findViewById(R.id.mediaList);
         mMedia.setNestedScrollingEnabled(false);
         mMedia.setHasFixedSize(false);
-        mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         mMedia.setLayoutManager(mMediaLayoutManager);
         mMediaAdapter = new MediaAdapter(getApplicationContext(),mediaUriList);
         mMedia.setAdapter(mMediaAdapter);
