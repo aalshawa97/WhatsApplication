@@ -110,7 +110,8 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage(){
         EditText mMessage = findViewById(R.id.message);
         if(!mMessage.getText().toString().isEmpty()){
-            DatabaseReference newMessageDb = mChatDb.push();
+            String messageId = mChatDb.push().getKey();
+            DatabaseReference newMessageDb = mChatDb.child(messageId);
 
             Map newMessageMap = new HashMap<>();
             newMessageMap.put("text", mMessage.getText().toString());
@@ -128,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         if(!mediaUriList.isEmpty()){
             for(String mediaUri : mediaUriList){
                 //String mediaId = newMessageDb.child("media").push().getKey;
-                final FirebaseStorage firebaseStorage;
+                //final FirebaseStorage filePath = FirebaseStorage.getInstance().getReference();
             }
         }
         mMessage.setText(null);
