@@ -74,7 +74,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.exists()){
                     String message = "", creatorID = "";
-
+                    ArrayList<String> mediaUrlList = new ArrayList<>();
                     if(snapshot.child("text").getValue() != null){
                         message = snapshot.child("text").getValue().toString();
                     }
@@ -83,7 +83,15 @@ public class ChatActivity extends AppCompatActivity {
                         creatorID = snapshot.child("creator").getValue().toString();
                     }
 
-                    MessageObject mMessage = new MessageObject(snapshot.getKey(), creatorID, message);
+                    if(snapshot.child("media").getChildrenCount() > 0) {
+
+                        for (DataSnapshot mediaSnapshot : snapshot.child("media").getChildren()){
+
+                        }
+
+                    }
+
+                        MessageObject mMessage = new MessageObject(snapshot.getKey(), creatorID, message);
                     userList.add(mMessage);
                     mUserListLayoutManager.scrollToPosition(userList.size()-1);
                     mChatListAdapter.notifyDataSetChanged();
