@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 //import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
         if(!mediaUriList.isEmpty()){
             for(String mediaUri : mediaUriList){
                 //String mediaId = newMessageDb.child("media").push().getKey;
-                //final FirebaseStorage
+                final FirebaseStorage firebaseStorage;
             }
         }
         mMessage.setText(null);
