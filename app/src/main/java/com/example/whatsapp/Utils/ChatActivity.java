@@ -86,12 +86,12 @@ public class ChatActivity extends AppCompatActivity {
                     if(snapshot.child("media").getChildrenCount() > 0) {
 
                         for (DataSnapshot mediaSnapshot : snapshot.child("media").getChildren()){
-
+                            mediaUrlList.add(mediaSnapshot.getValue().toString());
                         }
 
                     }
 
-                        MessageObject mMessage = new MessageObject(snapshot.getKey(), creatorID, message);
+                    MessageObject mMessage = new MessageObject(snapshot.getKey(), creatorID, message, mediaUrlList);
                     userList.add(mMessage);
                     mUserListLayoutManager.scrollToPosition(userList.size()-1);
                     mChatListAdapter.notifyDataSetChanged();
