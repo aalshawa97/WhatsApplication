@@ -1,12 +1,20 @@
 package com.example.whatsapp.User;
 
 public class UserObject {
-    private String uid, name,phone;
+    private String uid, name,phone, notificationKey;
 
-    public UserObject(String uid, String name, String phone){
+    public UserObject(String uid, String name, String phone, String notificationKey){
         this.uid = uid;
         this.name = name;
         this.phone = phone;
+        this.notificationKey = notificationKey;
+    }
+
+    public UserObject(String uid){
+        this.uid = uid;
+    }
+
+    public UserObject(String key, String name, String phone) {
     }
 
     public String getPhone() {
