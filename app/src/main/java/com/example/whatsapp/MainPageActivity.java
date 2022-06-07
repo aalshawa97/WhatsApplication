@@ -41,9 +41,9 @@ public class MainPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-        //OneSignal.initWithContext(this);
+        // OneSignal.initWithContext(this);
         //OneSignal.setSubscription(true);
-        new SendNotification();
+        new SendNotification("message 1", "heading 1", null);
         //Fresco.initialize(this);
         Button mLogout =  findViewById(R.id.logout);
         Button mFindUser = findViewById(R.id.findUser);

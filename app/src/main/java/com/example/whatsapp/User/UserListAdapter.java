@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsapp.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
     public ArrayList<UserObject> userList;
@@ -66,6 +68,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 FirebaseDatabase.getInstance().getReference().child("user").child(userList.get(holder.getAdapterPosition()).getUid()).child(key).setValue(true);
             }
         });
+    }
+
+    private void createChat(int position){
+        String key = FirebaseDatabase.getInstance().getReference().child("chat").push().getKey();
+        HashMap newChatMap = new HashMap();
+        newChatMap.put("id", key);
+        newChatMap.put("user/" + FirebaseAuth.getInstance().getUid(), true  );
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("user");
+        userDb.child(FirebaseAuth.getInstance().getUid()).child("chat").child(key).setValue(true);
+        userDb.child(userList.get(position).getUid()).child("chat").child(key).setValue(true);
     }
 
 

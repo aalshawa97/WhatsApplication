@@ -21,6 +21,7 @@ import com.example.whatsapp.Chat.MediaAdapter;
 import com.example.whatsapp.Chat.MessageAdapter;
 import com.example.whatsapp.Chat.MessageObject;
 import com.example.whatsapp.R;
+import com.example.whatsapp.User.UserObject;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -31,18 +32,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-//import com.google.firebase.storage.FirebaseStorage;
-
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-    private RecyclerView mChatList, mMedia;
+    private RecyclerView.LayoutManager mUserListLayoutManager;
+    @SuppressWarnings("rawtypes")
     private RecyclerView.Adapter mChatListAdapter, mMediaAdapter;
     ArrayList<MessageObject> userList, messageList;
-    private RecyclerView.LayoutManager mUserListLayoutManager, mMediaLayoutManager;
     String chatID;
     DatabaseReference mChatDb;
 
@@ -55,13 +54,6 @@ public class ChatActivity extends AppCompatActivity {
         Button mSend = findViewById(R.id.send);
         Button mAddMedia = findViewById(R.id.addMedia);
         mSend.setOnClickListener((v)-> {sendMessage();});
-        //mSend.setOnClickListener((v)-> {sendMessage();});
-        /*mSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMessage();
-            }
-        });*/
         mAddMedia.setOnClickListener((view -> {openGallery();}));
         initializeMessage();
         initializeMedia();
@@ -179,11 +171,19 @@ public class ChatActivity extends AppCompatActivity {
         mediaUriList.clear();
         mediaIdList.clear();
         mMediaAdapter.notifyDataSetChanged();
+
+        String message;
+
+        if(newMessageMap.get("text") != null){
+
+        }
+
+        //for(UserObject mUser: mMessage.getUser)
     }
 
     private void initializeMessage() {
         userList = new ArrayList<>();
-        mChatList = findViewById(R.id.messageList);
+        RecyclerView mChatList = findViewById(R.id.messageList);
         mChatList.setNestedScrollingEnabled(false);
         mChatList.setHasFixedSize(false);
         mUserListLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -197,10 +197,10 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initializeMedia() {
         mediaUriList = new ArrayList<>();
-        mMedia = findViewById(R.id.mediaList);
+        RecyclerView mMedia = findViewById(R.id.mediaList);
         mMedia.setNestedScrollingEnabled(false);
         mMedia.setHasFixedSize(false);
-        mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mMediaLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         mMedia.setLayoutManager(mMediaLayoutManager);
         mMediaAdapter = new MediaAdapter(getApplicationContext(),mediaUriList);
         mMedia.setAdapter(mMediaAdapter);
